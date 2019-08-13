@@ -28,8 +28,10 @@ const rebuildStackAnimatedValues = (props) => {
   const { stackSize, stackSeparation, stackScale } = props
 
   for (let position = 0; position < stackSize; position++) {
+    const scaleValue = position === 1 ? secondCardZoom : (100 - stackScale * position) * 0.01
+
     stackPositionsAndScales[`stackPosition${position}`] = new Animated.Value(stackSeparation * position)
-    stackPositionsAndScales[`stackScale${position}`] = new Animated.Value((100 - stackScale * position) * 0.01)
+    stackPositionsAndScales[`stackScale${position}`] = new Animated.Value(scaleValue)
   }
 
   return stackPositionsAndScales
