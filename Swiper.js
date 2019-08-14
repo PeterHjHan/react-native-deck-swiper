@@ -25,7 +25,7 @@ const calculateCardIndexes = (firstCardIndex, cards) => {
 
 const rebuildStackAnimatedValues = (props) => {
   const stackPositionsAndScales = {}
-  const { stackSize, stackSeparation, stackScale } = props
+  const { stackSize, stackSeparation, stackScale, secondCardZoom } = props
 
   for (let position = 0; position < stackSize; position++) {
     const scaleValue = position === 1 ? secondCardZoom : (100 - stackScale * position) * 0.01
