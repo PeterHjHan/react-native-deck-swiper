@@ -90,6 +90,16 @@ class Swiper extends Component {
     Dimensions.removeEventListener('change', this.onDimensionsChange)
   }
 
+  componentDidUpdate() {
+    if (!isEqual(this.props.cards, this.state.cards)) {
+      this.setState({
+        swipedAllCards: false,
+        cards: this.props.cards
+      });
+      this.forceUpdate();
+    }
+  }
+
   getCardStyle = () => {
     const { height, width } = Dimensions.get('window')
     const {
@@ -440,6 +450,10 @@ class Swiper extends Component {
           this.incrementCardIndex(onSwiped)
         }
       })
+
+      if (this.state.cards.length - this.state.firstCardIndex <= this.props.minimalCardsCoundBoundary) {
+        this.props.onMinimalCardsBoundaryСrossed();
+      }
     })
   }
 
@@ -923,7 +937,9 @@ Swiper.propTypes = {
   verticalSwipe: PropTypes.bool,
   verticalThreshold: PropTypes.number,
   zoomAnimationDuration: PropTypes.number,
-  zoomFriction: PropTypes.number
+  zoomFriction: PropTypes.number,
+  minimalCardsCoundBoundary: PropTypes.number,
+  onMinimalCardsBoundaryСrossed: PropTypes.func,
 }
 
 Swiper.defaultProps = {
@@ -976,6 +992,7 @@ Swiper.defaultProps = {
   onSwipedTop: cardIndex => { },
   onSwiping: () => { },
   onTapCard: (cardIndex) => { },
+  onMinimalCardsBoundaryСrossed: () => { },
   onTapCardDeadZone: 5,
   outputCardOpacityRangeX: [0.8, 1, 1, 1, 0.8],
   outputCardOpacityRangeY: [0.8, 1, 1, 1, 0.8],
@@ -1018,7 +1035,8 @@ Swiper.defaultProps = {
   verticalSwipe: true,
   verticalThreshold: height / 5,
   zoomAnimationDuration: 100,
-  zoomFriction: 7
+  zoomFriction: 7,
+  minimalCardsCoundBoundary: 0,
 }
 
 export default Swiper
