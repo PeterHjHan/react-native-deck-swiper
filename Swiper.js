@@ -269,20 +269,26 @@ class Swiper extends Component {
         this._animatedValueX,
         this._animatedValueY
       )
+      const wrappedCallback = (index, cardData) => {
+        onSwipeDirectionCallback(index, cardData)
+        this.setState({
+            labelType: LABEL_TYPES.NONE,
+            slideGesture: false
+        })
+      }
 
-      this.swipeCard(onSwipeDirectionCallback)
+      this.swipeCard(wrappedCallback)
     } else {
       this.resetTopCard()
+      this.setState({
+        labelType: LABEL_TYPES.NONE,
+        slideGesture: false
+      })
     }
 
     if (!this.state.slideGesture) {
       this.props.onTapCard(this.state.firstCardIndex)
     }
-
-    this.setState({
-      labelType: LABEL_TYPES.NONE,
-      slideGesture: false
-    })
   }
 
   getOnSwipeDirectionCallback = (animatedValueX, animatedValueY) => {
