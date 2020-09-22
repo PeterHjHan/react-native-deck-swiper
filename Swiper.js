@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { PanResponder, Text, View, Dimensions, Animated } from 'react-native'
+import { PanResponder, Text, View, Dimensions, Animated, ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 import isEqual from 'lodash/isEqual'
 import ViewOverflow from 'react-native-view-overflow'
@@ -775,8 +775,10 @@ class Swiper extends Component {
         style={firstCard ? swipableCardStyle : stackCardZoomStyle}
         {...this._panResponder.panHandlers}
       >
-        {firstCard ? renderOverlayLabel : null}
-        {stackCard}
+        <ScrollView>
+          {firstCard ? renderOverlayLabel : null}
+          {stackCard}
+        </ScrollView>
       </Animated.View>
     )
   }
